@@ -2,21 +2,36 @@
     "name": "ra-data-layr",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "demo-server": "babel-node examples/simple/server/index.js",
+        "demo-front": "webpack serve --mode development"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@layr/component": "1.1.12",
-        "@layr/component-express-middleware": "1.1.9"
+        "@layr/component-http-client": "1.1.18",
+        "@layr/component-express-middleware": "1.1.9",
+        "@layr/component-server": "1.1.11",
+        "react": "17.0.2"
     },
     "devDependencies": {
         "@babel/core": "^7.13.15",
         "@babel/node": "^7.13.13",
         "@babel/plugin-proposal-class-properties": "^7.13.0",
         "@babel/plugin-proposal-decorators": "^7.13.15",
-        "@babel/preset-env": "^7.13.15"
+        "@babel/plugin-transform-runtime": "7.13.15",
+        "@babel/preset-env": "^7.13.15",
+        "@babel/preset-react": "7.13.13",
+        "babel-loader": "^8.2.2",
+        "cors": "2.8.5",
+        "html-webpack-plugin": "^5.3.1",
+        "ra-data-fakerest": "3.13.5",
+        "react-admin": "3.14.3",
+        "react-dom": "17.0.2",
+        "webpack": "^5.32.0",
+        "webpack-cli": "^4.6.0",
+        "webpack-dev-server": "^3.11.2"
     }
 }
