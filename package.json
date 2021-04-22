@@ -10,10 +10,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@layr/component": "1.1.12",
-        "@layr/component-http-client": "1.1.18",
-        "@layr/component-express-middleware": "1.1.9",
-        "@layr/component-server": "1.1.11",
         "react": "17.0.2"
     },
     "devDependencies": {

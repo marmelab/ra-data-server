@@ -1,26 +1,28 @@
-import { useEffect, useState } from "react";
-import { ComponentHTTPClient } from "@layr/component-http-client";
+import { fetchUtils } from "react-admin";
 
-const getDataProvider = async (host) => {
-    const client = new ComponentHTTPClient(host);
-    const DataProvider = await client.getComponent();
-
-    return new DataProvider();
+const getDataProviderCall = (type, host) => (resource, params) => {
+    return fetchUtils
+        .fetchJson(host, {
+            method: "POST",
+            body: JSON.stringify({ type, resource, params }),
+        })
+        .then(({ json }) => {
+            return json;
+        });
 };
 
 export const useGetDataProvider = (host) => {
-    const [dataProvider, setDataProvider] = useState();
-
-    useEffect(() => {
-        getDataProvider(host).then((dataProvider) =>
-            setDataProvider(dataProvider)
-        );
-    }, [host, setDataProvider]);
-
-    if (dataProvider) {
-        console.log(dataProvider.getList("posts", {}));
-        dataProvider.getList("posts", {}).then(console.log);
-    }
+    const dataProvider = {
+        getList: getDataProviderCall("getList", host),
+        getOne: getDataProviderCall("getOne", host),
+        getMany: getDataProviderCall("getMany", host),
+        getManyReference: getDataProviderCall("getManyReference", host),
+        update: getDataProviderCall("update", host),
+        updateMany: getDataProviderCall("updateMany", host),
+        create: getDataProviderCall("create", host),
+        delete: getDataProviderCall("delete", host),
+        deleteMany: getDataProviderCall("deleteMany", host),
+    };
 
     return dataProvider;
 };
