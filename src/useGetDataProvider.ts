@@ -1,5 +1,4 @@
-import { fetchUtils } from "react-admin";
-import { DataProviderProxy, Record } from "ra-core";
+import { DataProviderProxy, fetchUtils } from "ra-core";
 
 import { DataProviderTypes, Params, Result } from "./types";
 

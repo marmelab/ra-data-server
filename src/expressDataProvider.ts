@@ -1,5 +1,4 @@
-import express from "express";
-
+import { Request, Response, NextFunction } from "express";
 import {
     DataProviderServerProxy,
     DataProviderTypes,
@@ -8,10 +7,9 @@ import {
 } from "./types";
 
 export const expressDataProvider = (handler: DataProviderServerProxy) => {
-    const app = express();
-    app.post("/", (req, res, next) => {
+    return (req: Request, res: Response, next: NextFunction) => {
         const type: DataProviderTypes = req.body.type;
-        const resource = req.body.resource;
+        const resource: string = req.body.resource;
         const params: Params<typeof type> = req.body.params;
 
         if (!dataProviderTypes.includes(type)) {
@@ -119,7 +117,5 @@ export const expressDataProvider = (handler: DataProviderServerProxy) => {
                     })
                     .catch(next);
         }
-    });
-
-    return app;
+    };
 };
