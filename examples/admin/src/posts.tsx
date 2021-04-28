@@ -16,13 +16,13 @@ import {
     Filter,
 } from "react-admin";
 
-const PostFilter = (props) => (
+const PostFilter = (props: any) => (
     <Filter {...props}>
         <TextInput label="Search" source="q" alwaysOn />
     </Filter>
 );
 
-export const PostList = (props) => (
+export const PostList = (props: any) => (
     <List {...props} filters={<PostFilter />}>
         <Datagrid>
             <TextField source="id" />
@@ -33,11 +33,11 @@ export const PostList = (props) => (
     </List>
 );
 
-const PostTitle = ({ record }) => {
+const PostTitle = ({ record }: any) => {
     return <span>Post {record ? `"${record.title}"` : ""}</span>;
 };
 
-export const PostEdit = (props) => (
+export const PostEdit = (props: any) => (
     <Edit title={<PostTitle />} {...props}>
         <SimpleForm>
             <TextInput disabled source="id" />
@@ -47,7 +47,7 @@ export const PostEdit = (props) => (
     </Edit>
 );
 
-export const PostCreate = (props) => (
+export const PostCreate = (props: any) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="title" />
@@ -56,7 +56,7 @@ export const PostCreate = (props) => (
     </Create>
 );
 
-export const PostShow = (props) => (
+export const PostShow = (props: any) => (
     <Show {...props}>
         <SimpleShowLayout>
             <TextField source="title" />

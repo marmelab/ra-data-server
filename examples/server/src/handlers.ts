@@ -1,10 +1,10 @@
 import inMemoryDb from "./utils/inMemoryDb";
 import data from "./data";
-import { DataProviderHandler } from "../../../src/expressDataProvider";
+import { DataProviderServerProxy } from "../../../src/types";
 
 const db = inMemoryDb(data);
 
-const handlers: DataProviderHandler = {
+const handlers: DataProviderServerProxy = {
     async getList(resource, params) {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;

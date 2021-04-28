@@ -12,7 +12,7 @@ module.exports = {
         rules: [
             {
                 test: /\.ts(x?)$/,
-                include: __dirname,
+                include: [__dirname, path.join(__dirname, "../../src")],
                 exclude: /node_modules/,
                 use: {
                     loader: "ts-loader",
