@@ -4,7 +4,7 @@ import data from "./data.js";
 const db = inMemoryDb(data);
 
 const handlers = {
-    getList: (resource, type, params) => {
+    async getList(resource, params) {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -13,25 +13,34 @@ const handlers = {
             filter: params.filter,
         };
         return {
-            data: db[resource].getAll(query),
-            total: db[resource].getCount({
-                filter: params.filter,
-            }),
+            body: {
+                data: db[resource].getAll(query),
+                total: db[resource].getCount({
+                    filter: params.filter,
+                }),
+            },
+            status: 200,
         };
     },
-    getOne(resource, params) {
+    async getOne(resource, params) {
         return {
-            data: db[resource].getOne(params.id, { ...params }),
+            body: {
+                data: db[resource].getOne(params.id, { ...params }),
+            },
+            status: 200,
         };
     },
-    getMany(resource, params) {
+    async getMany(resource, params) {
         return {
-            data: db[resource].getAll({
-                filter: { id: params.ids },
-            }),
+            body: {
+                data: db[resource].getAll({
+                    filter: { id: params.ids },
+                }),
+            },
+            status: 200,
         };
     },
-    getManyReference(resource, params) {
+    async getManyReference(resource, params) {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -40,38 +49,50 @@ const handlers = {
             filter: { ...params.filter, [params.target]: params.id },
         };
         return {
-            data: db[resource].getAll(query),
-            total: db[resource].getCount({
-                filter: query.filter,
-            }),
+            body: {
+                data: db[resource].getAll(query),
+                total: db[resource].getCount({
+                    filter: query.filter,
+                }),
+            },
+            status: 200,
         };
     },
-    update(resource, params) {
+    async update(resource, params) {
         return {
-            data: db[resource].updateOne(params.id, {
-                ...params.data,
-            }),
+            body: {
+                data: db[resource].updateOne(params.id, {
+                    ...params.data,
+                }),
+            },
+            status: 200,
         };
     },
-    updateMany(resource, params) {
+    async updateMany(resource, params) {
         params.ids.forEach((id) =>
             db[resource].updateOne(id, {
                 ...params.data,
             })
         );
-        return { data: params.ids };
+        return { body: { data: params.ids }, status: 200 };
     },
-    create(resource, params) {
+    async create(resource, params) {
         return {
-            data: db[resource].addOne({ ...params.data }),
+            body: {
+                data: db[resource].addOne({ ...params.data }),
+            },
+            status: 200,
         };
     },
-    delete(resource, params) {
-        return { data: db[resource].removeOne(params.id) };
+    async delete(resource, params) {
+        return {
+            body: { data: db[resource].removeOne(params.id) },
+            status: 200,
+        };
     },
-    deleteMany(resource, params) {
+    async deleteMany(resource, params) {
         params.ids.forEach((id) => db[resource].removeOne(id));
-        return { data: params.ids };
+        return { body: { data: params.ids }, status: 200 };
     },
 };
 

@@ -4,14 +4,9 @@ import { PostList, PostEdit, PostCreate, PostShow } from "./posts";
 
 import { useGetDataProvider } from "../../../src/useGetDataProvider.js";
 import Layout from "./Layout";
-// import dataProvider from "./dataProvider";
 
 export const App = () => {
     const dataProvider = useGetDataProvider("http://localhost:3001/admin");
-
-    if (!dataProvider) {
-        return null;
-    }
 
     return (
         <Admin
