@@ -6,6 +6,8 @@ import {
     dataProviderTypes,
 } from "./types";
 
+import { callHandler } from "./callHandler";
+
 export const expressDataProvider = (handler: DataProviderServerProxy) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const type: DataProviderTypes = req.body.type;
@@ -16,106 +18,11 @@ export const expressDataProvider = (handler: DataProviderServerProxy) => {
             return next();
         }
 
-        switch (type) {
-            case "getList":
-                return handler
-                    .getList(
-                        resource,
-                        params as Params<DataProviderTypes.getList>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "getOne":
-                return handler
-                    .getOne(
-                        resource,
-                        params as Params<DataProviderTypes.getOne>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "getMany":
-                return handler
-                    .getMany(
-                        resource,
-                        params as Params<DataProviderTypes.getMany>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "getManyReference":
-                return handler
-                    .getManyReference(
-                        resource,
-                        params as Params<DataProviderTypes.getManyReference>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "update":
-                return handler
-                    .update(
-                        resource,
-                        params as Params<DataProviderTypes.update>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "updateMany":
-                return handler
-                    .updateMany(
-                        resource,
-                        params as Params<DataProviderTypes.updateMany>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "create":
-                return handler
-                    .create(
-                        resource,
-                        params as Params<DataProviderTypes.create>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "delete":
-                return handler
-                    .delete(
-                        resource,
-                        params as Params<DataProviderTypes.delete>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-            case "deleteMany":
-                return handler
-                    .deleteMany(
-                        resource,
-                        params as Params<DataProviderTypes.deleteMany>
-                    )
-                    .then((response) => {
-                        res.status(response.status);
-                        res.json(response.body);
-                    })
-                    .catch(next);
-        }
+        return callHandler(handler, type, resource, params)
+            .then((response) => {
+                res.status(response.status);
+                res.json(response.body);
+            })
+            .catch(next);
     };
 };

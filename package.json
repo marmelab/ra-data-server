@@ -1,6 +1,6 @@
 {
     "name": "ra-data-server",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,6 +20,7 @@
     },
     "peerDependencies": {
         "express": "^4.17.1",
+        "koa": "2.13.1",
         "ra-core": "^3.14.5"
     }
 }
