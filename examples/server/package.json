@@ -1,0 +1,25 @@
+{
+    "name": "ra-data-server_example_server",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "ts-node --project ./tsconfig.json ./src/index.ts",
+        "compile": "tsc ./src/index.ts"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "2.8.5",
+        "express": "4.17.1",
+        "lodash": "4.17.21"
+    },
+    "devDependencies": {
+        "@types/express": "4.11.1",
+        "@types/lodash": "4.14.168",
+        "@types/cors": "2.8.10",
+        "typescript": "4.2.4",
+        "ts-node": "9.1.1"
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "name": "ra-data-server_example_front",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "start": "webpack serve --mode development"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "react": "17.0.2",
+        "react-admin": "3.14.3",
+        "react-dom": "17.0.2"
+    },
+    "devDependencies": {
+        "cors": "2.8.5",
+        "html-webpack-plugin": "^5.3.1",
+        "typescript": "4.2.4",
+        "ts-loader": "9.1.1",
+        "source-map-loader": "2.0.1",
+        "webpack": "^5.32.0",
+        "webpack-cli": "^4.6.0",
+        "webpack-dev-server": "^3.11.2"
+    }
+}

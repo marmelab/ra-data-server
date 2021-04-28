@@ -1,5 +1,5 @@
-import inMemoryDb from "./utils/inMemoryDb.js";
-import data from "./data.js";
+import inMemoryDb from "./utils/inMemoryDb";
+import data from "./data";
 
 const db = inMemoryDb(data);
 

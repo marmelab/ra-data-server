@@ -2,7 +2,7 @@ import React from "react";
 import { Admin, Resource } from "react-admin";
 import { PostList, PostEdit, PostCreate, PostShow } from "./posts";
 
-import { useGetDataProvider } from "../../../src/useGetDataProvider.js";
+import { useGetDataProvider } from "ra-data-server/useGetDataProvider";
 import Layout from "./Layout";
 
 export const App = () => {

@@ -1,5 +1,5 @@
-import get from "lodash/get.js";
-import matches from "lodash/matches.js";
+import get from "lodash/get";
+import matches from "lodash/matches";
 
 const every = (array, predicate) =>
     array.reduce((acc, value) => acc && predicate(value), true);
@@ -147,7 +147,7 @@ function sortItems(items, sort) {
         return items.sort(sort);
     }
     if (typeof sort === "string") {
-        return items.sort(function(a, b) {
+        return items.sort(function (a, b) {
             if (a[sort] > b[sort]) {
                 return 1;
             }
@@ -160,7 +160,7 @@ function sortItems(items, sort) {
     if (Array.isArray(sort)) {
         let key = sort[0];
         let direction = sort[1].toLowerCase() == "asc" ? 1 : -1;
-        return items.sort(function(a, b) {
+        return items.sort(function (a, b) {
             if (a[key] > b[key]) {
                 return direction;
             }
@@ -181,6 +181,14 @@ function rangeItems(items, range) {
         );
     }
     throw new Error("Unsupported range type");
+}
+
+interface Collection {
+    sequence: number;
+    identifierName: string;
+    items: any[];
+    server: any;
+    name: string | null;
 }
 
 class Collection {
@@ -220,7 +228,7 @@ class Collection {
      * @returns Function item => item
      */
     _oneToManyEmbedder(resourceName) {
-        const singularResourceName = this.name.slice(0, -1);
+        const singularResourceName = this.name && this.name.slice(0, -1);
         const referenceName = singularResourceName + "_id";
         return (item) => {
             const otherCollection = this.server.collections[resourceName];

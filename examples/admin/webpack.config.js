@@ -3,7 +3,7 @@ const path = require("path");
 
 module.exports = {
     // The entry point of the app is './src/frontend.js'
-    entry: path.resolve(__dirname, "./examples/simple/admin/index.tsx"),
+    entry: path.resolve(__dirname, "./src/index.tsx"),
     output: {
         filename: "bundle.js",
         publicPath: "/",
@@ -11,8 +11,8 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts$/,
-                include: path.join(__dirname),
+                test: /\.ts(x?)$/,
+                include: __dirname,
                 exclude: /node_modules/,
                 use: {
                     loader: "ts-loader",
@@ -26,12 +26,15 @@ module.exports = {
     },
     resolve: {
         extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+        alias: {
+            "ra-data-server": path.resolve(__dirname, "../../src/"),
+        },
     },
     plugins: [
         // Use 'html-webpack-plugin' to generate the 'index.html' file
         // from the './src/index.html' template
         new HtmlWebPackPlugin({
-            template: path.resolve(__dirname, "./examples/simple/index.html"),
+            template: path.resolve(__dirname, "./index.html"),
             inject: false,
         }),
     ],

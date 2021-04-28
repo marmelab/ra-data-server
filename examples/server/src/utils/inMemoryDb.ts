@@ -1,4 +1,4 @@
-import Collection from "./Collection.js";
+import Collection from "./Collection";
 
 const inMemoryDb = (data) => {
     const resources = Object.keys(data).reduce((acc, key) => {
