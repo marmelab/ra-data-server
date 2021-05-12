@@ -1,10 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import {
-    DataProviderServerProxy,
-    DataProviderTypes,
-    Params,
-    dataProviderTypes,
-} from "./types";
+import { DataProviderServerProxy, DataProviderTypes, Params } from "./types";
 
 import { callHandler } from "./callHandler";
 
@@ -13,10 +8,6 @@ export const expressDataProvider = (handler: DataProviderServerProxy) => {
         const type: DataProviderTypes = req.body.type;
         const resource: string = req.body.resource;
         const params: Params<typeof type> = req.body.params;
-
-        if (!dataProviderTypes.includes(type)) {
-            return next();
-        }
 
         return callHandler(handler, type, resource, params)
             .then((response) => {

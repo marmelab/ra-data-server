@@ -52,6 +52,11 @@ export const callHandler = async (
                 resource,
                 params as Params<DataProviderTypes.deleteMany>
             );
+        default: {
+            if (handler[type]) {
+                return handler[type](resource, params as any);
+            }
+            return { status: 404, body: `Invalid action type: ${type}` };
+        }
     }
-    throw new Error(`Invalid action type: ${type}`);
 };

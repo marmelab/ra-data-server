@@ -1,8 +1,14 @@
 import { DataProviderProxy, fetchUtils } from "ra-core";
 
-import { DataProviderTypes, Params, Result } from "./types";
+import {
+    DataProviderTypes,
+    Params,
+    Result,
+    ServerHandlerToFrontHandler,
+    DataProviderServerProxy,
+} from "./types";
 
-function getDataProviderCall<T extends DataProviderTypes>(
+function getDataProviderCall<T extends DataProviderTypes | string>(
     type: T,
     host: string
 ) {
@@ -18,7 +24,19 @@ function getDataProviderCall<T extends DataProviderTypes>(
     };
 }
 
-export const useGetDataProvider = (host: string) => {
+export const getDataProvider = <T extends DataProviderServerProxy>(
+    host: string
+): ServerHandlerToFrontHandler<T> => {
+    const handler = {
+        get: function (object: any, key: string) {
+            if (key in object) {
+                return object[key];
+            }
+
+            return getDataProviderCall(key, host);
+        },
+    };
+
     const dataProvider: DataProviderProxy = {
         getList: getDataProviderCall<DataProviderTypes.getList>(
             DataProviderTypes.getList,
@@ -37,5 +55,5 @@ export const useGetDataProvider = (host: string) => {
         deleteMany: getDataProviderCall(DataProviderTypes.deleteMany, host),
     };
 
-    return dataProvider;
+    return new Proxy(dataProvider, handler);
 };

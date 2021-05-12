@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
     Show,
     ShowButton,
@@ -14,6 +14,7 @@ import {
     SimpleForm,
     TextInput,
     Filter,
+    useDataProvider,
 } from "react-admin";
 
 const PostFilter = (props: any) => (
@@ -37,15 +38,27 @@ const PostTitle = ({ record }: any) => {
     return <span>Post {record ? `"${record.title}"` : ""}</span>;
 };
 
-export const PostEdit = (props: any) => (
-    <Edit title={<PostTitle />} {...props}>
-        <SimpleForm>
-            <TextInput disabled source="id" />
-            <TextInput source="title" />
-            <TextInput multiline source="body" />
-        </SimpleForm>
-    </Edit>
-);
+export const PostEdit = (props: any) => {
+    const dataprovider = useDataProvider();
+    const [queryCount, setQueryCount] = useState(0);
+
+    useEffect(() => {
+        dataprovider
+            .countRequestSinceServerStart()
+            .then((r: any) => setQueryCount(r.data));
+    }, []);
+
+    return (
+        <Edit title={<PostTitle />} {...props}>
+            <SimpleForm>
+                <p>query Count: {queryCount}</p>
+                <TextInput disabled source="id" />
+                <TextInput source="title" />
+                <TextInput multiline source="body" />
+            </SimpleForm>
+        </Edit>
+    );
+};
 
 export const PostCreate = (props: any) => (
     <Create {...props}>
