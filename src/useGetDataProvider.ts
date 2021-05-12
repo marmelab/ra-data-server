@@ -1,6 +1,12 @@
 import { DataProviderProxy, fetchUtils } from "ra-core";
 
-import { DataProviderTypes, Params, Result } from "./types";
+import {
+    DataProviderTypes,
+    Params,
+    Result,
+    ServerHandlerToFrontHandler,
+    DataProviderServerProxy,
+} from "./types";
 
 function getDataProviderCall<T extends DataProviderTypes | string>(
     type: T,
@@ -18,7 +24,9 @@ function getDataProviderCall<T extends DataProviderTypes | string>(
     };
 }
 
-export const useGetDataProvider = (host: string): DataProviderProxy => {
+export const useGetDataProvider = <T extends DataProviderServerProxy>(
+    host: string
+): ServerHandlerToFrontHandler<T> => {
     const handler = {
         get: function (object: any, key: string) {
             if (key in object) {

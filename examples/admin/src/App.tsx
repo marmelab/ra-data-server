@@ -2,10 +2,13 @@ import React from "react";
 import { Admin, Resource } from "react-admin";
 import { PostList, PostEdit, PostCreate, PostShow } from "./posts";
 import { useGetDataProvider } from "../../../src/useGetDataProvider";
+import { Handler } from "../../server/src/handlers";
 import Layout from "./Layout";
 
 export const App = () => {
-    const dataProvider = useGetDataProvider("http://localhost:3001/admin");
+    const dataProvider = useGetDataProvider<Handler>(
+        "http://localhost:3001/admin"
+    );
 
     return (
         <Admin

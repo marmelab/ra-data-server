@@ -1,12 +1,20 @@
 import inMemoryDb from "./utils/inMemoryDb";
 import data from "./data";
-import { DataProviderServerProxy } from "../../../src/types";
+import { DataProviderServerProxy, StatusCode } from "../../../src/types";
 
 const db = inMemoryDb(data);
 
 let queryCount = 0;
 
-const handlers: DataProviderServerProxy = {
+const handlers: DataProviderServerProxy & {
+    countRequestSinceServerStart: (
+        foo: string,
+        bar: number
+    ) => Promise<{
+        body: any;
+        status: StatusCode;
+    }>;
+} = {
     async getList(resource, params) {
         queryCount++;
         const { page, perPage } = params.pagination;
@@ -106,9 +114,11 @@ const handlers: DataProviderServerProxy = {
         return { body: { data: params.ids }, status: 200 };
     },
     // because why not ?
-    async countRequestSinceServerStart() {
+    async countRequestSinceServerStart(foo: string, bar: number) {
         return { body: { data: queryCount }, status: 200 };
     },
 };
+
+export type Handler = typeof handlers;
 
 export default handlers;

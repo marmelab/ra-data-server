@@ -49,7 +49,7 @@ export const dataProviderTypes: DataProviderTypes[] = [
 
 export type Response = {};
 
-type StatusCode = 200 | 400 | 401 | 403 | 404 | 500;
+export type StatusCode = 200 | 400 | 401 | 403 | 404 | 500;
 
 export type DataProviderServerProxy = {
     getList: <RecordType extends Record = Record>(
@@ -104,6 +104,17 @@ export type DataProviderServerProxy = {
     ) => Promise<{ body: DeleteManyResult; status: StatusCode }>;
     [key: string]: (...args: any) => Promise<{ body: any; status: StatusCode }>;
 };
+
+type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
+
+export type ServerHandlerToFrontHandler<
+    Handler extends DataProviderServerProxy
+> = {
+    [P in keyof Handler]: (
+        ...args: Parameters<Handler[P]>
+    ) => Promise<Awaited<ReturnType<Handler[P]>>["body"]>;
+} &
+    RaDataProviderProxy;
 
 export type Params<type> = type extends "getList"
     ? GetListParams
