@@ -24,7 +24,7 @@ function getDataProviderCall<T extends DataProviderTypes | string>(
     };
 }
 
-export const useGetDataProvider = <T extends DataProviderServerProxy>(
+export const getDataProvider = <T extends DataProviderServerProxy>(
     host: string
 ): ServerHandlerToFrontHandler<T> => {
     const handler = {
