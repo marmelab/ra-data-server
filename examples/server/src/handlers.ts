@@ -4,8 +4,11 @@ import { DataProviderServerProxy } from "../../../src/types";
 
 const db = inMemoryDb(data);
 
+let queryCount = 0;
+
 const handlers: DataProviderServerProxy = {
     async getList(resource, params) {
+        queryCount++;
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -24,6 +27,7 @@ const handlers: DataProviderServerProxy = {
         };
     },
     async getOne(resource, params) {
+        queryCount++;
         return {
             body: {
                 data: db[resource].getOne(params.id, { ...params }),
@@ -32,6 +36,7 @@ const handlers: DataProviderServerProxy = {
         };
     },
     async getMany(resource, params) {
+        queryCount++;
         return {
             body: {
                 data: db[resource].getAll({
@@ -42,6 +47,7 @@ const handlers: DataProviderServerProxy = {
         };
     },
     async getManyReference(resource, params) {
+        queryCount++;
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -60,6 +66,7 @@ const handlers: DataProviderServerProxy = {
         };
     },
     async update(resource, params) {
+        queryCount++;
         return {
             body: {
                 data: db[resource].updateOne(params.id, {
@@ -70,6 +77,7 @@ const handlers: DataProviderServerProxy = {
         };
     },
     async updateMany(resource, params) {
+        queryCount++;
         params.ids.forEach((id) =>
             db[resource].updateOne(id, {
                 ...params.data,
@@ -78,6 +86,7 @@ const handlers: DataProviderServerProxy = {
         return { body: { data: params.ids }, status: 200 };
     },
     async create(resource, params) {
+        queryCount++;
         return {
             body: {
                 data: db[resource].addOne({ ...params.data }),
@@ -86,6 +95,7 @@ const handlers: DataProviderServerProxy = {
         };
     },
     async delete(resource, params) {
+        queryCount++;
         return {
             body: { data: db[resource].removeOne(params.id) },
             status: 200,
@@ -94,6 +104,10 @@ const handlers: DataProviderServerProxy = {
     async deleteMany(resource, params) {
         params.ids.forEach((id) => db[resource].removeOne(id));
         return { body: { data: params.ids }, status: 200 };
+    },
+    // because why not ?
+    async countRequestSinceServerStart() {
+        return { body: { data: queryCount }, status: 200 };
     },
 };
 

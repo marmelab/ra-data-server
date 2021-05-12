@@ -102,6 +102,7 @@ export type DataProviderServerProxy = {
         resource: string,
         params: DeleteManyParams
     ) => Promise<{ body: DeleteManyResult; status: StatusCode }>;
+    [key: string]: (...args: any) => Promise<{ body: any; status: StatusCode }>;
 };
 
 export type Params<type> = type extends "getList"
